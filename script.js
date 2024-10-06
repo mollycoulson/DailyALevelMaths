@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (todayQuestion) {
                 // Dynamically set the image and answer for today
                 const questionImage = document.getElementById('question-image');
-                questionImage.src = todayQuestion.image;
+                questionImage.src = '6_10_24.jpg';
                 window.correctAnswer = math.evaluate(todayQuestion.answer);
             } else {
                 document.getElementById('result').innerText = "No question available for today!";
