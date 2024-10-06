@@ -1,31 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Hardcoded date for testing
-    const currentDate = "2024-10-06"; // Change this to test other dates if needed
+    const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-    // Here we manually set the question data
-    const questions = [
-        {
-            "date": "2024-10-06",
-            "image": "6_10_24.jpg",
-            "answer": "3"
-        },
-        {
-            "date": "2024-10-07",
-            "image": "2024-10-07.jpg",
-            "answer": "2"
-        }
-    ];
+    fetch('questions.json')  // Fetch the questions from the JSON file
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const todayQuestion = data.find(q => q.date === currentDate);
 
-    const todayQuestion = questions.find(q => q.date === currentDate);
-
-    if (todayQuestion) {
-        // Dynamically set the image and answer for today
-        const questionImage = document.getElementById('question-image');
-        questionImage.src = todayQuestion.image; // Set hardcoded image
-        window.correctAnswer = math.evaluate(todayQuestion.answer); // Make sure 'math' is defined
-    } else {
-        document.getElementById('result').innerText = "No question available for today!";
-    }
+            if (todayQuestion) {
+                // Dynamically set the image and answer for today
+                const questionImage = document.getElementById('question-image');
+                questionImage.src = todayQuestion.image; // Set image from JSON
+                window.correctAnswer = math.evaluate(todayQuestion.answer); // Evaluate answer
+            } else {
+                document.getElementById('result').innerText = "No question available for today!";
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching the questions:", error);
+            document.getElementById('result').innerText = "Error fetching questions. Please try again later.";
+        });
 });
 
 function submitAnswer() {
