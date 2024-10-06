@@ -1,12 +1,12 @@
 [
     {
         "date": "2024-10-06",
-        "image": "08_06_24.jpg",
-        "answer": "4 * Math.sqrt(2)"
+        "image": "06_10_24.jpg",
+        "answer": "3"
     },
     {
         "date": "2024-10-07",
-        "image": "08_07_24.jpg",
-        "answer": "Math.pow(3, 2)"
+        "image": "2024-10-07.jpg",
+        "answer": "2"
     }
 ]
