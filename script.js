@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-    fetch('questions.json')  // Fetch the questions from the JSON file
+    fetch('question.json')  // Fetch the questions from the JSON file
         .then(response => response.json())
         .then(data => {
             const todayQuestion = data.find(q => q.date === currentDate);
