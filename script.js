@@ -4,25 +4,28 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('questions.json')  // Fetch the questions from the JSON file
         .then(response => {
             if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
+            // Find today's question
             const todayQuestion = data.find(q => q.date === currentDate);
 
             if (todayQuestion) {
-                // Dynamically set the image and answer for today
+                // Set the image source to today's question image
                 const questionImage = document.getElementById('question-image');
-                questionImage.src = todayQuestion.image; // Set image from JSON
-                window.correctAnswer = math.evaluate(todayQuestion.answer); // Evaluate answer
+                questionImage.src = todayQuestion.image;
+                
+                // Store the correct answer globally
+                window.correctAnswer = math.evaluate(todayQuestion.answer);
             } else {
                 document.getElementById('result').innerText = "No question available for today!";
             }
         })
         .catch(error => {
             console.error("Error fetching the questions:", error);
-            document.getElementById('result').innerText = "Error fetching questions. Please try again later.";
+            document.getElementById('result').innerText = "Failed to load question!";
         });
 });
 
@@ -31,7 +34,7 @@ function submitAnswer() {
     const resultSection = document.getElementById('result');
 
     try {
-        const userAnswer = math.evaluate(userAnswerText); // Ensure 'math' is defined
+        const userAnswer = math.evaluate(userAnswerText);
         const tolerance = 0.01;
 
         if (Math.abs(userAnswer - window.correctAnswer) < tolerance) {
